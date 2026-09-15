@@ -1,0 +1,525 @@
+Dia 1 — Começando no mundo mobile
+
+Hoje oficialmente comecei a entrar no mundo do desenvolvimento mobile.
+
+Até agora eu já tinha trabalhado mais com desenvolvimento web, então essa parte de criar aplicativo para celular ainda é praticamente nova para mim. Como o projeto que vou desenvolver vai ter primeiro uma versão mobile e depois uma versão web, antes de sair criando tela e escrevendo código eu resolvi preparar todo o ambiente que vou precisar.
+
+E aparentemente desenvolver para Android envolve instalar metade da internet no PC kkkkk.
+
+1. Definindo como o aplicativo vai ser feito
+
+Antes de instalar qualquer coisa, defini a base de tecnologias que pretendo usar no projeto.
+
+A interface mobile vai ser feita principalmente com:
+
+React Native + Expo + TypeScript
+
+Escolhi React Native porque consigo desenvolver o aplicativo usando JavaScript/TypeScript, que também vai aparecer em outras partes do sistema.
+
+O Expo vai facilitar bastante o desenvolvimento, principalmente na parte de executar, testar e futuramente trabalhar com recursos do celular.
+
+Já o TypeScript vai ajudar a deixar o projeto mais organizado e evitar vários erros relacionados aos dados.
+
+Esse sistema vai lidar com bastante coisa:
+
+- produtos;
+- categorias;
+- fornecedores;
+- clientes;
+- estoque;
+- movimentações;
+- vendas;
+- formas de pagamento;
+- parcelas;
+- contas a receber;
+- relatórios.
+
+Então começar organizado vai ser importante.
+
+2. Visual Studio Code
+
+O primeiro programa da estrutura é o Visual Studio Code.
+
+Ele vai ser o editor onde realmente vou escrever o código do projeto.
+
+É nele que vou trabalhar com os arquivos:
+
+.ts
+.tsx
+.js
+.json
+
+e praticamente toda a estrutura do React Native.
+
+O Android Studio também possui editor de código, mas inicialmente não pretendo programar por ele. Vou utilizar o VS Code como ambiente principal e deixar o Android Studio mais responsável pela parte Android.
+
+3. Node.js e npm
+
+Também instalei o Node.js.
+
+No teste:
+
+node -v
+
+o resultado foi:
+
+v24.19.0
+
+O Node vai permitir executar JavaScript fora do navegador e vai ser uma das bases do nosso ambiente.
+
+Junto com ele veio o npm, que é o gerenciador de pacotes.
+
+Basicamente, sempre que o projeto precisar de alguma biblioteca, provavelmente vou usar o npm para instalar.
+
+Por exemplo, mais pra frente vamos ter coisas como:
+
+React Native
+Expo
+Zod
+Zustand
+React Hook Form
+Axios
+TanStack Query
+
+No começo o npm deu problema.
+
+Quando executei:
+
+npm -v
+
+o PowerShell bloqueou o arquivo npm.ps1 porque a execução de scripts estava desativada.
+
+A solução foi alterar a política apenas para meu usuário:
+
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+
+Depois conferi:
+
+Get-ExecutionPolicy -Scope CurrentUser
+
+e apareceu:
+
+RemoteSigned
+
+Testando novamente:
+
+npm -v
+
+resultado:
+
+11.17.0
+
+Primeiro probleminha do projeto resolvido.
+
+4. Git
+
+Também instalei e testei o Git.
+
+git --version
+
+Resultado:
+
+git version 2.54.0.windows.1
+
+O Git vai registrar todo o histórico do desenvolvimento.
+
+Isso vai ser importante porque quero criar um repositório específico para esse sistema.
+
+Conforme o projeto evoluir, vou conseguir registrar coisas como:
+
+criação do projeto
+criação do dashboard
+tela de produtos
+cadastro de clientes
+tela de vendas
+integração com a API
+banco de dados
+
+Além de servir como histórico caso alguma alteração quebre alguma coisa.
+
+5. Java e o primeiro erro de versão
+
+Essa parte foi interessante porque, apesar de eu não estar fazendo o aplicativo em Java, o Android ainda depende de várias ferramentas Java por trás.
+
+Inicialmente eu estava usando:
+
+OpenJDK 25
+
+Quando executei:
+
+java -version
+
+apareceu a versão 25.
+
+O problema é que para nosso ambiente Android eu queria trabalhar com JDK 17, que é uma versão mais segura para compatibilidade com as ferramentas que vamos utilizar.
+
+Então instalei:
+
+Microsoft OpenJDK 17
+
+Depois da instalação testei novamente:
+
+java -version
+
+e finalmente ficou:
+
+OpenJDK 17.0.20
+
+Também conferi:
+
+echo $env:JAVA_HOME
+
+e o Windows passou a apontar para:
+
+C:\Program Files\Microsoft\jdk-17.0.20.101-hotspot\
+
+Eu ainda tenho o Java 25 instalado, mas como o Java 17 aparece primeiro no PATH, é ele que o sistema está utilizando.
+
+6. Android Studio
+
+Depois veio provavelmente a maior parte da preparação: Android Studio.
+
+Eu não vou usar ele principalmente para escrever o código do aplicativo.
+
+A função dele no projeto vai ser fornecer toda a infraestrutura necessária para desenvolver para Android.
+
+Entre as coisas instaladas estão:
+
+- Android SDK;
+- Android SDK Build-Tools;
+- Platform-Tools;
+- Command-line Tools;
+- Android Emulator;
+- ferramentas de compilação.
+
+O Android Studio basicamente vai fornecer as ferramentas que transformam nosso código React Native em algo que o Android consegue executar.
+
+7. Android SDK
+
+O Android SDK é um conjunto de ferramentas para desenvolvimento Android.
+
+Durante a configuração também deixei instalado o:
+
+Android SDK Command-line Tools
+
+que permite que outras ferramentas controlem partes do Android SDK pelo terminal.
+
+O SDK ficou instalado em:
+
+C:\Users\David\AppData\Local\Android\Sdk
+
+Só que apareceu outro problema.
+
+Quando tentei:
+
+adb --version
+
+o Windows não reconheceu o comando.
+
+Também testei:
+
+echo $env:ANDROID_HOME
+
+e não apareceu nada.
+
+O Android SDK estava instalado, mas o Windows ainda não sabia onde procurar por ele.
+
+Então configurei a variável:
+
+ANDROID_HOME
+
+apontando para:
+
+C:\Users\David\AppData\Local\Android\Sdk
+
+e também coloquei as ferramentas necessárias no PATH.
+
+Depois disso:
+
+echo $env:ANDROID_HOME
+
+passou a mostrar o caminho corretamente.
+
+8. ADB — Android Debug Bridge
+
+Hoje também descobri o que é o ADB.
+
+ADB significa:
+
+Android Debug Bridge
+
+Ele funciona como uma ponte entre o computador e um dispositivo Android.
+
+No nosso caso:
+
+VS Code / Expo
+        ↓
+       ADB
+        ↓
+Emulador Android
+        ↓
+      App
+
+Testei:
+
+adb --version
+
+e o comando finalmente funcionou.
+
+Isso significa que o Windows já consegue acessar as ferramentas Android pelo terminal.
+
+9. Criando meu primeiro celular virtual
+
+No Android Studio criei um dispositivo virtual:
+
+Pixel 8
+
+com:
+
+Android 16
+API 36
+Google Play
+x86_64
+1080 x 2400
+
+Esse Pixel 8 vai funcionar como se fosse um celular dentro do meu computador.
+
+Assim eu não preciso ficar instalando o aplicativo no meu celular toda hora durante o desenvolvimento.
+
+Vou poder escrever o código no VS Code e ver o resultado diretamente no emulador.
+
+10. O emulador ficou offline
+
+Claro que não podia simplesmente funcionar de primeira kkkkk.
+
+Quando finalmente abri o Pixel 8 e executei:
+
+adb devices
+
+apareceu:
+
+emulator-5554    offline
+
+O computador conseguia encontrar o emulador, mas ainda não conseguia conversar corretamente com ele.
+
+Primeiro tentei reiniciar o ADB:
+
+adb kill-server
+adb start-server
+
+Depois usei no Android Studio:
+
+Device Manager
+→ Pixel 8
+→ Cold Boot
+
+O Cold Boot faz o celular virtual iniciar completamente do zero, em vez de carregar o estado anterior que estava salvo.
+
+Depois disso executei novamente:
+
+adb devices
+
+e finalmente apareceu:
+
+emulator-5554    device
+
+UHULLL.
+
+Esse device significa que agora o computador realmente consegue conversar com o Android virtual.
+
+Então o fluxo:
+
+Windows
+   ↓
+Android SDK
+   ↓
+ADB
+   ↓
+Pixel 8
+
+está funcionando.
+
+11. PostgreSQL e pgAdmin
+
+Também deixei instalado o PostgreSQL, que provavelmente vai ser o banco principal do sistema.
+
+Mesmo que a gente ainda vá demorar um pouco para chegar nessa parte, já deixei o ambiente preparado.
+
+O PostgreSQL vai guardar coisas como:
+
+produtos
+categorias
+fornecedores
+clientes
+
+vendas
+itens das vendas
+
+estoque
+movimentações
+
+pagamentos
+parcelas
+contas a receber
+
+O pgAdmin vai servir como interface gráfica para administrar esse banco.
+
+Ou seja:
+
+PostgreSQL
+= banco de dados
+
+pgAdmin
+= ferramenta para visualizar e administrar o PostgreSQL
+
+Essa provavelmente vai ser uma das partes mais pesadas do projeto quando chegar a hora.
+
+12. Postman
+
+Também instalei o Postman.
+
+Por enquanto ele não vai ser muito utilizado.
+
+Ele vai entrar principalmente quando começarmos o back-end.
+
+Quando tivermos uma API com coisas tipo:
+
+GET /produtos
+POST /produtos
+GET /clientes
+POST /vendas
+
+vou conseguir testar essas rotas pelo Postman antes mesmo de ligar elas ao aplicativo.
+
+Então vai ser praticamente nossa ferramenta para conversar e testar a API.
+
+13. Figma
+
+Também deixei o Figma preparado.
+
+Ele vai servir para trabalhar na ideia visual das telas antes ou durante a criação da interface.
+
+Como já tenho várias referências de outros sistemas, posso usar essas ideias para criar nosso próprio modelo de:
+
+dashboard
+produtos
+estoque
+clientes
+vendas
+pagamentos
+contas a receber
+relatórios
+
+Não necessariamente vou desenhar 100% do aplicativo no Figma antes de programar, mas ele pode ajudar bastante nas telas maiores.
+
+14. O que os testes de hoje significaram
+
+Hoje rodei vários comandos que no começo pareciam meio aleatórios, mas agora já consigo entender melhor o motivo de cada um.
+
+node -v
+
+Verifica se o Node está instalado e acessível.
+
+npm -v
+
+Verifica se o gerenciador de pacotes está funcionando.
+
+git --version
+
+Confirma que o Git está disponível.
+
+java -version
+
+Mostra qual versão do Java o Windows está realmente utilizando.
+
+where.exe java
+
+Mostra onde os executáveis do Java estão instalados.
+
+echo $env:JAVA_HOME
+
+Mostra qual JDK está configurado como principal.
+
+echo $env:ANDROID_HOME
+
+Mostra onde o Android SDK está instalado.
+
+adb --version
+
+Confirma que o Android Debug Bridge está disponível.
+
+adb devices
+
+Mostra quais dispositivos Android estão conectados ao computador.
+
+No nosso caso o resultado final foi:
+
+emulator-5554    device
+
+que foi praticamente o sinal de:
+
+"beleza, finalmente tá funcionando" kkkkk.
+
+15. Como o ambiente ficou no final do dia
+
+No final ficou mais ou menos assim:
+
+VS Code
+   │
+   ├── React Native
+   ├── Expo
+   └── TypeScript
+          │
+          ▼
+        Node.js
+          │
+          ▼
+     Android SDK
+          │
+         ADB
+          │
+          ▼
+     Pixel 8 virtual
+
+E futuramente:
+
+APP MOBILE
+    │
+    ▼
+BACK-END / API
+    │
+    ▼
+POSTGRESQL
+
+Depois o sistema web também vai utilizar essa mesma API e o mesmo banco.
+
+Considerações finais
+
+Hoje não escrevi praticamente nenhuma linha do aplicativo ainda, mas foi um dia importante porque preparei toda a estrutura necessária para conseguir começar.
+
+Também foi meu primeiro contato mais sério com coisas como:
+
+Android SDK
+ADB
+emulador Android
+JAVA_HOME
+ANDROID_HOME
+JDK
+
+e já apareceram alguns problemas no caminho.
+
+O npm estava bloqueado pelo PowerShell, o Java estava na versão errada, o Android SDK não estava configurado nas variáveis do Windows e, quando finalmente abri o celular virtual, ele apareceu como offline.
+
+Mas fui resolvendo um de cada vez e terminei o dia com:
+
+emulator-5554    device
+
+Então considero que o Dia 1 terminou com sucesso.
+
+Tô cansado pra caralho já, mas pelo menos agora o ambiente está pronto e amanhã não preciso ficar brigando com instalação.
+
+O próximo passo vai ser bem mais interessante:
+
+Criar oficialmente o projeto React Native + Expo + TypeScript, abrir no VS Code e colocar o primeiro código do aplicativo para rodar no Pixel 8.
+
+Dia 1 concluído — começando no mundo mobile.
