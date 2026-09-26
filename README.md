@@ -1,2 +1,1 @@
-# Sistma_Mobile
 
